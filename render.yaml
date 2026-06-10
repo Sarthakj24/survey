@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: absence-survey
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: ADMIN_PASSWORD
+        sync: false          # set this in the Render dashboard
+      - key: PYTHON_VERSION
+        value: 3.12.4
+      # For persistent data, attach a disk (see README) and uncomment:
+      # - key: DB_PATH
+      #   value: /data/absences.db
+    # disk:                  # uncomment to persist the SQLite file across deploys
+    #   name: data
+    #   mountPath: /data
+    #   sizeGB: 1

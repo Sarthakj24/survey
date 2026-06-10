@@ -60,32 +60,48 @@ process environment, not the file):
 |------------------|----------|---------------|----------------------------------------------|
 | `ADMIN_PASSWORD` | yes      | `changeme`    | Password for the `/admin` page.              |
 | `DB_PATH`        | no       | `absences.db` | Path to the SQLite file.                     |
-| `PORT`           | no       | `8000`        | Port to bind (set automatically by Railway). |
+| `PORT`           | no       | `8000`        | Port to bind (set automatically by Render).  |
 
 > Always set a real `ADMIN_PASSWORD` in production — the default is insecure.
 
-## Deploy to Railway
+## Deploy to Render
+
+This repo includes a `render.yaml` blueprint, so you can deploy in one of two
+ways.
+
+### Option A — Blueprint (recommended)
 
 1. Push this project to a GitHub repo.
-2. In [Railway](https://railway.app), click **New Project → Deploy from GitHub
-   repo** and pick the repo.
-3. Railway auto-detects Python and installs `requirements.txt`. The included
-   **`Procfile`** defines the start command:
-   ```
-   web: uvicorn app:app --host 0.0.0.0 --port $PORT
-   ```
-   `$PORT` is provided by Railway automatically.
-4. Go to your service's **Variables** tab and add:
+2. In [Render](https://render.com), click **New → Blueprint** and pick the repo.
+   Render reads `render.yaml` and creates the web service automatically.
+3. When prompted (or in the service's **Environment** tab afterwards), set:
    - `ADMIN_PASSWORD` = your chosen password
-5. Deploy. Railway gives you a public URL — share `https://<your-app>.up.railway.app/`
+4. Deploy. Render gives you a public URL — share `https://<your-app>.onrender.com/`
    as the form link, and use `/admin` for the dashboard.
+
+### Option B — Manual web service
+
+1. In Render, click **New → Web Service** and connect the repo.
+2. Set:
+   - **Build command:** `pip install -r requirements.txt`
+   - **Start command:** `uvicorn app:app --host 0.0.0.0 --port $PORT`
+   - **Environment variable:** `ADMIN_PASSWORD` = your chosen password
+3. Deploy.
+
+`$PORT` is provided by Render automatically — the app reads it, so no code
+changes are needed.
 
 ### Note on data persistence
 
-SQLite stores data in a file on the container's filesystem, which is ephemeral
-on Railway (it can be reset on redeploys). For durable storage, attach a
-[Railway Volume](https://docs.railway.app/reference/volumes) mounted at e.g.
-`/data` and set `DB_PATH=/data/absences.db`.
+SQLite stores data in a file on the container's filesystem, which is **ephemeral**
+on Render's free tier — it resets on every deploy and on restarts. For durable
+storage, attach a [Render Disk](https://render.com/docs/disks) and point the app
+at it:
+
+1. Add a disk to the service (e.g. name `data`, mount path `/data`, 1 GB).
+2. Set `DB_PATH=/data/absences.db`.
+
+The `render.yaml` has both of these commented out — uncomment them to enable.
 
 ## Validation rules
 
