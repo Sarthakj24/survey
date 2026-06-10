@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Absence Reason Form</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="header-band"></div>
+    <div class="card">
+      <h1 id="formTitle">Absence Reason Form</h1>
+      <p class="subtitle">Please record the reason for your absence on each listed date.</p>
+    </div>
+
+    <div id="message"></div>
+
+    <form id="absenceForm" class="hidden">
+      <div class="card">
+        <div class="row">
+          <div class="field">
+            <label for="name">Name <span style="color:var(--danger)">*</span></label>
+            <input type="text" id="name" name="name" placeholder="Your full name" required />
+          </div>
+          <div class="field">
+            <label for="employeeCode">Employee Code <span style="color:var(--danger)">*</span></label>
+            <input type="text" id="employeeCode" name="employeeCode" placeholder="e.g. EMP1024" required />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Reason for each date</h2>
+        <p class="muted">Pick a reason for every date below. Choose "Other" to type a custom reason.</p>
+        <div id="datesContainer"></div>
+      </div>
+
+      <div class="card">
+        <button type="submit" class="btn" id="submitBtn">Submit</button>
+      </div>
+    </form>
+
+    <div id="noDates" class="card hidden">
+      <h2>No dates configured yet</h2>
+      <p class="muted">The administrator hasn't set up any dates for this form. Please check back later.</p>
+    </div>
+
+    <p class="muted" style="text-align:center">
+      Administrator? <a class="link" href="/admin">Open admin panel</a>
+    </p>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

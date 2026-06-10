@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin · Absence Reason Form</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="header-band"></div>
+    <div class="card">
+      <h1>Admin Panel</h1>
+      <p class="subtitle">Configure the dates, share the link, and download responses.</p>
+    </div>
+
+    <div id="message"></div>
+
+    <!-- Login -->
+    <div id="loginCard" class="card">
+      <h2>Sign in</h2>
+      <div class="field">
+        <label for="password">Admin password</label>
+        <input type="password" id="password" placeholder="Enter admin password" />
+      </div>
+      <button class="btn" id="loginBtn">Sign in</button>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="hidden">
+      <div class="card">
+        <h2>Form setup</h2>
+        <div class="field">
+          <label for="title">Form title</label>
+          <input type="text" id="title" placeholder="Absence Reason Form" />
+        </div>
+        <div class="field">
+          <label>Dates <span class="muted">(up to 20)</span></label>
+          <p class="muted">Add each date employees must explain. These are the same for everyone who opens the link.</p>
+          <div id="datesList"></div>
+          <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
+            <input type="date" id="newDate" style="max-width:220px" />
+            <button type="button" class="btn secondary" id="addDateBtn">Add date</button>
+          </div>
+          <div class="count-note" id="dateCount"></div>
+        </div>
+        <button class="btn" id="saveConfigBtn">Save setup</button>
+      </div>
+
+      <div class="card">
+        <h2>Share with employees</h2>
+        <p class="muted">Send this link to each person. They fill in their own details.</p>
+        <div class="share-box">
+          <input type="text" id="shareLink" readonly />
+          <button class="btn secondary" id="copyLinkBtn">Copy link</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Responses <span class="pill" id="respCount">0</span></h2>
+        <div class="toolbar">
+          <button class="btn" id="downloadBtn">Download CSV</button>
+          <button class="btn secondary" id="refreshBtn">Refresh</button>
+          <button class="btn danger" id="clearBtn">Clear all responses</button>
+        </div>
+        <div id="responsesTable"></div>
+      </div>
+    </div>
+
+    <p class="muted" style="text-align:center">
+      <a class="link" href="/">Go to employee form</a>
+    </p>
+  </div>
+
+  <script src="/admin.js"></script>
+</body>
+</html>

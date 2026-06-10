@@ -1,0 +1,13 @@
+{
+  "name": "absence-reason-survey",
+  "version": "1.0.0",
+  "description": "Google Forms-style app to collect employee absence reasons per date. Admin configures dates and downloads combined responses.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "license": "MIT"
+}
