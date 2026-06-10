@@ -21,11 +21,18 @@ from fastapi.templating import Jinja2Templates
 # ---------------------------------------------------------------------------
 # Config — change these as needed.
 # ---------------------------------------------------------------------------
-YEAR = 2025          # Year used for the date dropdown (change here to update).
-MONTH = 5            # Month (May). Together with YEAR drives the date options.
-MONTH_NAME = "May"
-DAYS_IN_MONTH = 31   # Number of days to list in the dropdown.
-MAX_ROWS = 20        # Maximum date entries per submission.
+MAX_DATES = 20       # Maximum number of dates offered in the dropdown.
+
+# The dates everyone can choose from — the SAME list for every person who
+# receives the link. Edit this list (ISO "YYYY-MM-DD"), up to MAX_DATES entries.
+ABSENCE_DATES = [
+    "2026-06-18",
+    "2026-06-19",
+    "2026-06-20",
+]
+
+# One entry per available date, so the per-submission cap matches the dropdown.
+MAX_ROWS = MAX_DATES
 
 REASONS = ["Log out", "Missed regularisation", "Other (specify)"]
 OTHER_REASON = "Other (specify)"
@@ -33,10 +40,15 @@ OTHER_REASON = "Other (specify)"
 DB_PATH = os.environ.get("DB_PATH", "absences.db")
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "changeme")
 
-# Pre-build the list of selectable dates, e.g. ("2025-05-01", "01 May").
+if len(ABSENCE_DATES) > MAX_DATES:
+    raise ValueError(
+        f"ABSENCE_DATES allows at most {MAX_DATES} dates; got {len(ABSENCE_DATES)}."
+    )
+
+# Pre-build the dropdown options as (value, label), e.g. ("2026-06-18", "18 Jun 2026").
 DATE_OPTIONS = [
-    (f"{YEAR:04d}-{MONTH:02d}-{day:02d}", f"{day:02d} {MONTH_NAME}")
-    for day in range(1, DAYS_IN_MONTH + 1)
+    (value, datetime.strptime(value, "%Y-%m-%d").strftime("%d %b %Y"))
+    for value in ABSENCE_DATES
 ]
 VALID_DATE_VALUES = {value for value, _ in DATE_OPTIONS}
 
