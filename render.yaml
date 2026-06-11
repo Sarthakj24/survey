@@ -10,10 +10,12 @@ services:
         sync: false          # set this in the Render dashboard
       - key: PYTHON_VERSION
         value: 3.12.4
-      # For persistent data, attach a disk (see README) and uncomment:
-      # - key: DB_PATH
-      #   value: /data/absences.db
-    # disk:                  # uncomment to persist the SQLite file across deploys
-    #   name: data
-    #   mountPath: /data
-    #   sizeGB: 1
+      # Store the SQLite file on the persistent disk mounted below.
+      - key: DB_PATH
+        value: /data/absences.db
+    # Persistent disk so submissions survive deploys/restarts.
+    # Requires a paid (Starter+) instance — disks can't attach to Free.
+    disk:
+      name: data
+      mountPath: /data
+      sizeGB: 1
