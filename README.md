@@ -20,13 +20,18 @@ submissions.
 
 ## Configuration
 
-The date dropdown and limits are constants at the top of `app.py`:
+The date dropdown is an explicit list of dates at the top of `app.py` — the
+**same list for everyone** who gets the link. Edit it to the dates you need
+(ISO `YYYY-MM-DD`), up to 20 entries:
 
 ```python
-YEAR = 2025          # change the year here
-MONTH = 5            # May
-DAYS_IN_MONTH = 31
-MAX_ROWS = 20        # max date entries per submission
+MAX_DATES = 20       # max dates offered in the dropdown (hard cap of 20)
+
+ABSENCE_DATES = [
+    "2026-06-18",
+    "2026-06-19",
+    "2026-06-20",
+]
 ```
 
 ## Run locally
